@@ -40,6 +40,7 @@ public class SurlService {
     @Transactional
     public void modify(Surl surl, String title, String body) {
         surl.setTitle(title);
+        surl.setBody(body);
         surl.setModified();
     }
 

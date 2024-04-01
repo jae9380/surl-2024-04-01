@@ -198,4 +198,8 @@ public class Rq {
 
         return map;
     }
+
+    public void destroySession() {
+        req.getSession().invalidate();
+    }
 }

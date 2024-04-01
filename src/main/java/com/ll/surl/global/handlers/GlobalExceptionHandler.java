@@ -1,4 +1,4 @@
-package com.ll.surl.global.exceptionHandlers;
+package com.ll.surl.global.handlers;
 
 import com.ll.surl.global.exception.GlobalException;
 import com.ll.surl.global.rq.Rq;
