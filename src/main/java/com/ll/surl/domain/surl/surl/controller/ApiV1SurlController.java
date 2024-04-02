@@ -1,5 +1,6 @@
 package com.ll.surl.domain.surl.surl.controller;
 
+import com.ll.surl.domain.permission.permission.service.PermissionService;
 import com.ll.surl.domain.surl.surl.entity.Surl;
 import com.ll.surl.domain.surl.surl.service.SurlService;
 import com.ll.surl.global.exception.GlobalException;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 public class ApiV1SurlController {
     private final SurlService surlService;
     private final Rq rq;
+    private final PermissionService permissionService;
 
 
     public record SurlCreateRequestBody(
@@ -59,6 +61,9 @@ public class ApiV1SurlController {
             @Valid @RequestBody SurlModifyRequestBody requestBody
     ) {
         Surl surl = surlService.findById(id).orElseThrow(GlobalException.E404::new);
+
+        permissionService.check(rq.getMember(), surl, PermissionService.Action.MODIFY);
+
         surlService.modify(surl, requestBody.title, requestBody.body);
 
         return RsData.of(new SurlModifyResponseBody(surl.getShortUrl()));
