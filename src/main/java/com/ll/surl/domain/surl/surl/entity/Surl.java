@@ -19,9 +19,7 @@ import static lombok.AccessLevel.PROTECTED;
 @Getter
 @Setter
 public class Surl extends BaseTime {
-    @Id
-    @GeneratedValue(strategy = IDENTITY)
-    private Long id;
+
     @ManyToOne
     private Member author;
     private String url;
@@ -29,6 +27,6 @@ public class Surl extends BaseTime {
     private String body;
 
     public String getShortUrl() {
-        return AppConfig.getSiteBackUrl() + "/" + id;
+        return AppConfig.getSiteBackUrl() + "/" + getId();
     }
 }

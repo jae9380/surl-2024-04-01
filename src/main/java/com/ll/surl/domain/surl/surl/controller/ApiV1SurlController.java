@@ -68,4 +68,23 @@ public class ApiV1SurlController {
 
         return RsData.of(new SurlModifyResponseBody(surl.getShortUrl()));
     }
+
+    public record SurlDeleteResponseBody(
+            String shortUrl
+    ) {
+    }
+
+    @DeleteMapping("/{id}")
+    @Transactional
+    public RsData<SurlDeleteResponseBody> delete(
+            @PathVariable long id
+    ) {
+        Surl surl = surlService.findById(id).orElseThrow(GlobalException.E404::new);
+
+        permissionService.check(rq.getMember(), surl, PermissionService.Action.DELETE);
+
+        surlService.delete(surl);
+
+        return RsData.of(new SurlDeleteResponseBody(surl.getShortUrl()));
+    }
 }
